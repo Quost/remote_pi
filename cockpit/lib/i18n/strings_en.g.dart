@@ -1402,6 +1402,15 @@ class Translations$cockpit$paneView$en {
 
 	/// en: 'Open as orchestration'
 	String get openAsOrchestration => 'Open as orchestration';
+
+	/// en: 'Open in Finder'
+	String get revealInFinder => 'Open in Finder';
+
+	/// en: 'Open in Explorer'
+	String get revealInExplorer => 'Open in Explorer';
+
+	/// en: 'Open in file manager'
+	String get revealInFileManager => 'Open in file manager';
 }
 
 // Path: cockpit.fileTreePanel
@@ -4794,6 +4803,9 @@ extension on Translations {
 			'cockpit.paneView.openAsHtml' => 'Open as HTML',
 			'cockpit.paneView.openAsJson' => 'Open as JSON',
 			'cockpit.paneView.openAsOrchestration' => 'Open as orchestration',
+			'cockpit.paneView.revealInFinder' => 'Open in Finder',
+			'cockpit.paneView.revealInExplorer' => 'Open in Explorer',
+			'cockpit.paneView.revealInFileManager' => 'Open in file manager',
 			'cockpit.fileTreePanel.viewDiff' => 'View Diff',
 			'cockpit.fileTreePanel.commit' => 'Commit',
 			'cockpit.fileTreePanel.stageAndCommit' => 'Stage and Commit',
@@ -5089,6 +5101,8 @@ extension on Translations {
 		} ?? switch (path) {
 			'cockpit.dbConnectionDialog.sshUser' => 'SSH User',
 			'cockpit.dbConnectionDialog.privateKey' => 'Private key',
+			_ => null,
+		} ?? switch (path) {
 			'cockpit.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Choose a private key…',
 			'cockpit.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Choose SSH private key',
 			'cockpit.dbConnectionDialog.keyPassphrase' => 'Key passphrase',
@@ -5605,6 +5619,8 @@ extension on Translations {
 			'settings.remoteHosts.helpBody' => 'Cockpit connects to your machine over SSH and talks to a small server that runs the terminals, files and git there. The host must have Cockpit (desktop) or the cockpit-server installed and running, and this device’s public key added to its ~/.ssh/authorized_keys.',
 			'automation.error.unavailable' => ({required Object harness}) => '${harness} is not installed or is not on PATH.',
 			'automation.error.modelUnavailable' => ({required Object model, required Object harness}) => 'Model "${model}" is not available for ${harness}. Choose another model in Settings.',
+			_ => null,
+		} ?? switch (path) {
 			'automation.error.authentication' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',
 			'automation.error.timeout' => ({required Object harness, required Object seconds}) => '${harness} did not respond within ${seconds} seconds.',
 			'automation.error.cancelled' => 'Commit message generation was cancelled.',

@@ -698,6 +698,9 @@ class _Translations$cockpit$paneView$pt_BR extends Translations$cockpit$paneView
 	@override String get openAsHtml => 'Abrir como HTML';
 	@override String get openAsJson => 'Abrir como JSON';
 	@override String get openAsOrchestration => 'Abrir como orquestração';
+	@override String get revealInFinder => 'Abrir local no Finder';
+	@override String get revealInExplorer => 'Abrir local no Explorer';
+	@override String get revealInFileManager => 'Abrir no gerenciador de arquivos';
 }
 
 // Path: cockpit.fileTreePanel
@@ -2380,6 +2383,9 @@ extension on TranslationsPtBr {
 			'cockpit.paneView.openAsHtml' => 'Abrir como HTML',
 			'cockpit.paneView.openAsJson' => 'Abrir como JSON',
 			'cockpit.paneView.openAsOrchestration' => 'Abrir como orquestração',
+			'cockpit.paneView.revealInFinder' => 'Abrir local no Finder',
+			'cockpit.paneView.revealInExplorer' => 'Abrir local no Explorer',
+			'cockpit.paneView.revealInFileManager' => 'Abrir no gerenciador de arquivos',
 			'cockpit.fileTreePanel.viewDiff' => 'Ver Diff',
 			'cockpit.fileTreePanel.commit' => 'Commit',
 			'cockpit.fileTreePanel.stageAndCommit' => 'Stage e Commit',
@@ -2675,6 +2681,8 @@ extension on TranslationsPtBr {
 		} ?? switch (path) {
 			'cockpit.dbConnectionDialog.sshUser' => 'Usuário SSH',
 			'cockpit.dbConnectionDialog.privateKey' => 'Chave privada',
+			_ => null,
+		} ?? switch (path) {
 			'cockpit.dbConnectionDialog.choosePrivateKeyPlaceholder' => 'Escolha uma chave privada…',
 			'cockpit.dbConnectionDialog.choosePrivateKeyDialogTitle' => 'Escolher chave privada SSH',
 			'cockpit.dbConnectionDialog.keyPassphrase' => 'Senha da chave',
@@ -3191,6 +3199,8 @@ extension on TranslationsPtBr {
 			'settings.remoteHosts.helpBody' => 'O Cockpit conecta na sua máquina por SSH e fala com um servidor pequeno que roda os terminais, arquivos e git lá. O host precisa ter o Cockpit (desktop) ou o cockpit-server instalado e rodando, e a chave pública deste dispositivo adicionada no ~/.ssh/authorized_keys dele.',
 			'automation.error.unavailable' => ({required Object harness}) => '${harness} não está instalado ou não está no PATH.',
 			'automation.error.modelUnavailable' => ({required Object model, required Object harness}) => 'O modelo "${model}" não está disponível para ${harness}. Escolha outro modelo em Configurações.',
+			_ => null,
+		} ?? switch (path) {
 			'automation.error.authentication' => ({required Object harness, required Object detail}) => '${harness}: ${detail}',
 			'automation.error.timeout' => ({required Object harness, required Object seconds}) => '${harness} não respondeu em ${seconds} segundos.',
 			'automation.error.cancelled' => 'A geração da mensagem de commit foi cancelada.',

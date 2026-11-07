@@ -620,6 +620,9 @@ class _Translations$cockpit$paneView$zh extends Translations$cockpit$paneView$en
 	@override String get openAsHtml => '以 HTML 打开';
 	@override String get openAsJson => '以 JSON 打开';
 	@override String get openAsOrchestration => '以编排打开';
+	@override String get revealInFinder => '在 Finder 中打开';
+	@override String get revealInExplorer => '在资源管理器中打开';
+	@override String get revealInFileManager => '在文件管理器中打开';
 }
 
 // Path: cockpit.fileTreePanel
@@ -2302,6 +2305,9 @@ extension on TranslationsZh {
 			'cockpit.paneView.openAsHtml' => '以 HTML 打开',
 			'cockpit.paneView.openAsJson' => '以 JSON 打开',
 			'cockpit.paneView.openAsOrchestration' => '以编排打开',
+			'cockpit.paneView.revealInFinder' => '在 Finder 中打开',
+			'cockpit.paneView.revealInExplorer' => '在资源管理器中打开',
+			'cockpit.paneView.revealInFileManager' => '在文件管理器中打开',
 			'cockpit.fileTreePanel.viewDiff' => '查看差异',
 			'cockpit.fileTreePanel.commit' => '提交',
 			'cockpit.fileTreePanel.stageAndCommit' => '暂存并提交',
@@ -2597,6 +2603,8 @@ extension on TranslationsZh {
 		} ?? switch (path) {
 			'cockpit.dbConnectionDialog.sshUser' => 'SSH 用户',
 			'cockpit.dbConnectionDialog.privateKey' => '私钥',
+			_ => null,
+		} ?? switch (path) {
 			'cockpit.dbConnectionDialog.choosePrivateKeyPlaceholder' => '选择一个私钥…',
 			'cockpit.dbConnectionDialog.choosePrivateKeyDialogTitle' => '选择 SSH 私钥',
 			'cockpit.dbConnectionDialog.keyPassphrase' => '密钥口令',
@@ -3113,6 +3121,8 @@ extension on TranslationsZh {
 			'settings.remoteHosts.helpBody' => 'Cockpit 通过 SSH 连接到你的机器，并与一个小型服务器通信，由它运行终端、文件和 git。主机必须安装并运行 Cockpit（桌面版）或 cockpit-server，并将本设备的公钥添加到其 ~/.ssh/authorized_keys。',
 			'automation.error.unavailable' => ({required Object harness}) => '${harness} 未安装或不在 PATH 中。',
 			'automation.error.modelUnavailable' => ({required Object model, required Object harness}) => '模型「${model}」在 ${harness} 中不可用。请在设置中选择其他模型。',
+			_ => null,
+		} ?? switch (path) {
 			'automation.error.authentication' => ({required Object harness, required Object detail}) => '${harness}：${detail}',
 			'automation.error.timeout' => ({required Object harness, required Object seconds}) => '${harness} 在 ${seconds} 秒内未响应。',
 			'automation.error.cancelled' => '提交信息生成已取消。',
