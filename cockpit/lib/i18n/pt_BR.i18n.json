@@ -682,6 +682,7 @@
       "remove": "Remover",
       "moveToRealm": "Mover para realm",
       "copyWorkspaceId": "Copiar id do workspace",
+      "openInWindow": "Abrir em nova janela",
       "rename": "Renomear",
       "close": "Fechar",
       "newRealm": "Novo realm…",

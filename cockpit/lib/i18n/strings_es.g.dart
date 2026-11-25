@@ -1218,6 +1218,7 @@ class _Translations$cockpit$projectsRail$es extends Translations$cockpit$project
 	@override String get remove => 'Quitar';
 	@override String get moveToRealm => 'Mover a realm';
 	@override String get copyWorkspaceId => 'Copiar id del workspace';
+	@override String get openInWindow => 'Abrir en nueva ventana';
 	@override String get rename => 'Renombrar';
 	@override String get close => 'Cerrar';
 	@override String get newRealm => 'Nuevo realm…';
@@ -2912,6 +2913,7 @@ extension on TranslationsEs {
 			'cockpit.projectsRail.remove' => 'Quitar',
 			'cockpit.projectsRail.moveToRealm' => 'Mover a realm',
 			'cockpit.projectsRail.copyWorkspaceId' => 'Copiar id del workspace',
+			'cockpit.projectsRail.openInWindow' => 'Abrir en nueva ventana',
 			'cockpit.projectsRail.rename' => 'Renombrar',
 			'cockpit.projectsRail.close' => 'Cerrar',
 			'cockpit.projectsRail.newRealm' => 'Nuevo realm…',

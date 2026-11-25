@@ -68,6 +68,63 @@ class DocumentWindows {
   }
 }
 
+/// Abre um **workspace completo** (projeto ou pin remoto) em uma janela
+/// separada do Cockpit — o "detach" que o usuário pediu. Cada janela tem um
+/// engine Flutter próprio e roda o shell inteiro (rail + panes + multiplexador)
+/// com o workspace alvo já selecionado. É assim que se deixa o cockpit do SSH
+/// de casa numa mesa e o do trabalho noutra.
+///
+/// No Windows/Linux cada workspace abre em outro processo (mesmo padrão dos
+/// documentos standalone) para sobreviver ao fechamento do Cockpit de origem.
+class WorkspaceWindows {
+  WorkspaceWindows._();
+
+  static const _workspaceProcess = 'workspace';
+
+  static bool isStandaloneWorkspace(List<String> args) =>
+      args.length == 3 && args[0] == 'multi_window' && args[1] == _workspaceProcess;
+
+  /// Argumento que o engine da janela recebe (`main(args)` →
+  /// `['multi_window', 'workspace', <este JSON>]`).
+  static String argumentsFor(String projectId) =>
+      jsonEncode({'type': 'workspace', 'projectId': projectId});
+
+  /// `projectId` do JSON de argumentos, ou `null` se não é uma janela de
+  /// workspace.
+  static String? projectIdFromArguments(List<String> args) {
+    if (args.length < 3 || args[0] != 'multi_window') return null;
+    if (isStandaloneWorkspace(args)) {
+      return args[2].isNotEmpty ? args[2] : null;
+    }
+    try {
+      final json = jsonDecode(args[2]);
+      if (json is Map && json['type'] == 'workspace') {
+        final projectId = json['projectId'];
+        if (projectId is String && projectId.isNotEmpty) return projectId;
+      }
+    } on FormatException {
+      // argumento de outro tipo de janela (ou vazio) → não é workspace
+    }
+    return null;
+  }
+
+  /// Abre (e mostra) uma janela de workspace para [projectId].
+  static Future<void> open(String projectId) async {
+    if (Platform.isWindows) {
+      await Process.start(Platform.resolvedExecutable, [
+        'multi_window',
+        _workspaceProcess,
+        projectId,
+      ], mode: ProcessStartMode.detached);
+      return;
+    }
+    final controller = await WindowController.create(
+      WindowConfiguration(arguments: argumentsFor(projectId)),
+    );
+    await controller.show();
+  }
+}
+
 /// Canal com o lado nativo da **própria** janela de documento (registrado no
 /// `setOnWindowCreatedCallback` do macOS): título e tamanho. Best-effort —
 /// plataforma sem o canal só fica sem título.

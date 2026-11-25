@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:cockpit/app/core/utils/text_clipboard.dart';
+import '../document/document_windows.dart';
 import 'package:cockpit/app/cockpit/domain/entities/git_info.dart';
 import 'package:cockpit/app/cockpit/domain/entities/project.dart';
 import 'package:cockpit/app/cockpit/domain/entities/realm.dart';
@@ -90,6 +91,7 @@ class ProjectsRail extends StatefulWidget {
     required this.onManageRealms,
     required this.moveTargetsOf,
     required this.onMoveToRealm,
+    required this.onOpenInWindow,
     this.cockpit,
     required this.onSelectCockpit,
     required this.onNewWorkspace,
@@ -167,6 +169,8 @@ class ProjectsRail extends StatefulWidget {
   /// o atual do projeto). Vazio (0 ou 1 realm) esconde o item do menu.
   final List<RealmTarget> Function(String projectId) moveTargetsOf;
   final void Function(String projectId, String realmId) onMoveToRealm;
+  /// Abre o workspace [projectId] numa janela separada (detach).
+  final void Function(String projectId) onOpenInWindow;
   final ValueChanged<String> onSelect;
   final Future<bool> Function() onAdd;
   final ValueChanged<Project> onConfigure;
@@ -306,6 +310,7 @@ class _ProjectsRailState extends State<ProjectsRail> {
               onTap: () => _onCardTap(project, () => widget.onSelectRemote(id)),
               onToggleExpanded: () => _toggleWorktrees(project),
               onAction: (action) => widget.onRemoteWorkspaceAction(id, action),
+              onOpenInWindow: () => widget.onOpenInWindow(id),
             ),
           ),
           _ForkList(
@@ -354,6 +359,7 @@ class _ProjectsRailState extends State<ProjectsRail> {
             onSwitchBranch: (r) => widget.onSwitchBranch(project, r),
             moveTargetsOf: () => widget.moveTargetsOf(id),
             onMoveToRealm: (realmId) => widget.onMoveToRealm(id, realmId),
+            onOpenInWindow: () => widget.onOpenInWindow(project.id),
           ),
         ),
         // Worktrees (forks) penduradas abaixo do workspace, expandidas/
@@ -806,6 +812,7 @@ class _RemoteSlot extends StatelessWidget {
     required this.onTap,
     required this.onToggleExpanded,
     required this.onAction,
+    required this.onOpenInWindow,
   });
 
   /// `true` se o host tem forks pendurados — só então o chevron aparece.
@@ -854,6 +861,9 @@ class _RemoteSlot extends StatelessWidget {
   /// Ações roteadas pra página: 'pull' | 'push' | 'sync' | 'rename' | 'close'.
   final void Function(String action) onAction;
 
+  /// Abre este workspace remoto numa janela separada (detach).
+  final VoidCallback onOpenInWindow;
+
   Future<void> _showMenu(BuildContext context, Offset at) async {
     final tr = context.t.cockpit.projectsRail;
     final roots = rootsOf(); // resolvido no clique, não por build
@@ -874,6 +884,11 @@ class _RemoteSlot extends StatelessWidget {
           value: 'copy-id',
           label: tr.copyWorkspaceId,
           icon: Icons.content_copy,
+        ),
+        AppMenuItem(
+          value: 'open-in-window',
+          label: tr.openInWindow,
+          icon: Icons.open_in_new,
         ),
         if (moveTargets.isNotEmpty)
           AppMenuItem(
@@ -919,6 +934,10 @@ class _RemoteSlot extends StatelessWidget {
         workspaceId,
         operation: 'projects_rail',
       );
+      return;
+    }
+    if (pick == 'open-in-window') {
+      onOpenInWindow();
       return;
     }
     onAction(pick);
@@ -1104,6 +1123,7 @@ class _ProjectItem extends StatelessWidget {
   /// realm, o que dava O(workspaces²) por build da rail.
   final List<RealmTarget> Function() moveTargetsOf;
   final void Function(String realmId) onMoveToRealm;
+  final VoidCallback onOpenInWindow;
 
   @override
   Widget build(BuildContext context) {
@@ -1122,6 +1142,7 @@ class _ProjectItem extends StatelessWidget {
       onSwitchBranch: onSwitchBranch,
       moveTargetsOf: moveTargetsOf,
       onMoveToRealm: onMoveToRealm,
+      onOpenInWindow: onOpenInWindow,
     );
     return Padding(
       padding: const EdgeInsets.only(bottom: 2),
@@ -1841,6 +1862,7 @@ class _WorkspaceMenu {
   /// Thunk, como [rootsOf].
   final List<RealmTarget> Function() moveTargetsOf;
   final void Function(String realmId) onMoveToRealm;
+  final VoidCallback onOpenInWindow;
 
   Future<void> show(BuildContext context, Offset at) async {
     // Resolvidos aqui, no clique — não a cada build da rail.
@@ -1902,6 +1924,11 @@ class _WorkspaceMenu {
           label: context.t.cockpit.projectsRail.copyWorkspaceId,
           icon: Icons.content_copy,
         ),
+        AppMenuItem(
+          value: 'open-in-window',
+          label: context.t.cockpit.projectsRail.openInWindow,
+          icon: Icons.open_in_new,
+        ),
         // Só com git: sem repo não há branch a copiar. Em multirepo vira
         // submenu por root, igual a pull/push — cada root está numa branch
         // diferente, então "a branch do workspace" não existe.
@@ -1960,6 +1987,7 @@ class _WorkspaceMenu {
         operation: 'projects_rail',
       );
     }
+    if (pick == 'open-in-window') onOpenInWindow();
     if (pick == 'config') onConfigure();
     if (pick == 'delete') onDelete();
   }

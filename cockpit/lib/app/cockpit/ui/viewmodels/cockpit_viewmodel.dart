@@ -1,6 +1,7 @@
 import 'package:cockpit/app/cockpit/domain/services/gallery_creates.dart';
 import '../document/open_files_channel.dart';
 import '../document/native_document_router.dart';
+import '../document/initial_workspace.dart';
 import 'package:cockpit/app/cockpit/domain/entities/orchestration_presentation.dart';
 import 'dart:async';
 import 'package:path/path.dart' as path;
@@ -4133,6 +4134,17 @@ class CockpitViewModel extends ChangeNotifier
   /// 2. senão, o Cockpit (1º boot de instalação nova: sem `lastSelected`);
   /// 3. senão, o primeiro workspace do realm; `null` se não houver nenhum.
   Future<String?> _initialSelection() async {
+    // Janela de "detach workspace": o workspace alvo veio nos argumentos da
+    // janela (ver cockpitInitialWorkspaceId). Seleciona direto, sem recorrer
+    // à última seleção nem ao primeiro projeto.
+    final initial = cockpitInitialWorkspaceId;
+    if (initial != null) {
+      if (_projectById(initial) != null && _visibleInActiveRealm(initial)) {
+        return initial;
+      }
+      // O workspace alvo ainda não está na lista (ex.: pin remoto injetado
+      // depois) → ignora o argumento e segue o fluxo normal de seleção.
+    }
     try {
       final last = await _projects.loadLastSelected(realmCtrl.activeId);
       if (last != null && _visibleInActiveRealm(last)) return last;

@@ -2657,6 +2657,9 @@ class Translations$cockpit$projectsRail$en {
 	/// en: 'Copy workspace id'
 	String get copyWorkspaceId => 'Copy workspace id';
 
+	/// en: 'Open in new window'
+	String get openInWindow => 'Open in new window';
+
 	/// en: 'Rename'
 	String get rename => 'Rename';
 
@@ -5590,6 +5593,7 @@ extension on Translations {
 			'cockpit.projectsRail.remove' => 'Remove',
 			'cockpit.projectsRail.moveToRealm' => 'Move to realm',
 			'cockpit.projectsRail.copyWorkspaceId' => 'Copy workspace id',
+			'cockpit.projectsRail.openInWindow' => 'Open in new window',
 			'cockpit.projectsRail.rename' => 'Rename',
 			'cockpit.projectsRail.close' => 'Close',
 			'cockpit.projectsRail.newRealm' => 'New realm…',

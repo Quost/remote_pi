@@ -953,6 +953,7 @@ class _RailPanel extends StatelessWidget {
           moveTargetsOf: (projectId) => moveTargets(vm, projectId),
           onMoveToRealm: (projectId, realmId) =>
               unawaited(vm.moveWorkspaceToRealm(projectId, realmId)),
+          onOpenInWindow: (projectId) => WorkspaceWindows.open(projectId),
           cockpit: vm.cockpitWorkspace,
           onSelectCockpit: () {
             vm.selectProject(Project.cockpitId);

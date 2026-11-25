@@ -675,6 +675,7 @@
       "remove": "移除",
       "moveToRealm": "移动到领域",
       "copyWorkspaceId": "复制工作区 ID",
+      "openInWindow": "在新窗口打开",
       "rename": "重命名",
       "close": "关闭",
       "newRealm": "新建领域…",

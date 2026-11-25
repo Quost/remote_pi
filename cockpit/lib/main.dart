@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cockpit/app/bootstrapper.dart';
 import 'package:cockpit/app/cockpit/ui/document/document_window_app.dart';
 import 'package:cockpit/app/cockpit/ui/document/document_windows.dart';
+import 'package:cockpit/app/cockpit/ui/document/initial_workspace.dart';
 import 'package:cockpit/app/cockpit/ui/document/open_files_channel.dart';
 import 'package:cockpit/app/cockpit/ui/document/running_instance.dart';
 import 'package:cockpit/app/core/data/diagnostics/diagnostics_log.dart';
@@ -30,6 +31,12 @@ Future<void> main(List<String> args) async {
   if (DocumentWindows.pathFromArguments(args) != null) {
     await runDocumentWindow(args);
     return;
+  }
+  // Janela de "detach workspace": o app completo roda, com o workspace alvo
+  // já pré-selecionado (ver cockpitInitialWorkspaceId).
+  final workspaceId = WorkspaceWindows.projectIdFromArguments(args);
+  if (workspaceId != null) {
+    cockpitInitialWorkspaceId = workspaceId;
   }
   // Windows/Linux: "abrir com" sobe um processo novo por arquivo. Se já há um
   // Cockpit vivo, entrega os caminhos a ele e sai; senão este processo vira o

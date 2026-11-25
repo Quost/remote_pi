@@ -1137,6 +1137,7 @@ class _Translations$cockpit$projectsRail$zh extends Translations$cockpit$project
 	@override String get remove => '移除';
 	@override String get moveToRealm => '移动到领域';
 	@override String get copyWorkspaceId => '复制工作区 ID';
+	@override String get openInWindow => '在新窗口打开';
 	@override String get rename => '重命名';
 	@override String get close => '关闭';
 	@override String get newRealm => '新建领域…';
@@ -2828,6 +2829,7 @@ extension on TranslationsZh {
 			'cockpit.projectsRail.remove' => '移除',
 			'cockpit.projectsRail.moveToRealm' => '移动到领域',
 			'cockpit.projectsRail.copyWorkspaceId' => '复制工作区 ID',
+			'cockpit.projectsRail.openInWindow' => '在新窗口打开',
 			'cockpit.projectsRail.rename' => '重命名',
 			'cockpit.projectsRail.close' => '关闭',
 			'cockpit.projectsRail.newRealm' => '新建领域…',
